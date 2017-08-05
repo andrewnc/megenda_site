@@ -1,0 +1,55 @@
+{% import "bootstrap/utils.html" as utils %}
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block body %}
+<div class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+            	<!-- Messages -->
+            	{% with messages = get_flashed_messages() %}
+				  {% if messages %}
+				    {% for message in messages %}
+					 <div class="alert alert-warning alert-dismissible" role="alert">
+					 <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+						{{message}}
+					 </div>
+					{% endfor %}
+				  {% endif %}
+				{% endwith %}
+
+				<!-- Agenda List -->
+                <div class="intro-message col-md-12">
+                    <h1>My Agendas</h1>
+                    <hr class="intro-divider">
+                    {% if agendas|length == 0 %}
+                    	<h3>You don't have any agendas</h3>
+                    {% else %}
+
+	                    <div class="agendas">
+	                    {% for agenda in agendas %}
+	                    	<a class="agenda" href="/agenda/{{agenda.uuid}}">{{agenda}}</a> --- <a href="/delete/agenda/{{agenda.uuid}}" class="delete">x<span><br />
+	                    {% endfor %}
+	                	</div>
+	                {% endif %}                    
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                	<a href="{{url_for('home.add_agenda')}}" class="btn btn-default">Add Agenda</a>
+                </div>	
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extrascripts %}
+<script type="text/javascript">
+$(document).ready(function(){
+	$(".delete").click(function(){
+		return confirm("Are you sure you want to delete this agenda?");
+	})
+})
+</script>
+
+{% endblock %}

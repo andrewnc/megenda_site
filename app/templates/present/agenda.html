@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block extrastyles %}
+<link href="{{ url_for('static', filename='css/present.css') }}" rel="stylesheet">
+{% endblock %}
+{% block body %}
+
+
+<div class="card-container">
+
+{% for point in points %}
+  <div class="card">
+      <div class="card-image"></div>
+    <div class="card-info {{point.id}}">
+      <div class="card-title">{{point.name}}</div>
+      <div class="card-detail">{{point.content}}</div>
+    </div>
+  </div>
+ {% endfor %}
+  
+
+
+</div>
+{% endblock %}
+
+{% block extrascripts %}
+
+<script type="text/javascript">
+$(document).ready(function(){
+
+	$(".card").each(function(){
+		if($(this).children().eq(1).attr('class').split(" ")[1] == "{{current_point.id}}"){
+			$(this).show();
+		}else{
+			$(this).hide();
+		}
+	})
+
+	function push_active(point_id){
+		$.ajax({
+		  method: "POST",
+		  url: "/view/active/" + point_id,
+		})
+		  .done(function( msg ) {
+		    console.log( "Data Saved: " + msg );
+		    $(".current_point").text(msg);
+
+		  });
+	}
+
+	$(".card").click(function(){
+		var next = $(this).next();
+		if(next.length == 0){
+			$(".card-container").children().first().toggle();
+			push_active($(".card-container").children().first().children().eq(1).attr('class').split(" ")[1]);
+			$(this).toggle();
+		}else{
+			$(this).toggle();
+			push_active($(next).children().eq(1).attr('class').split(" ")[1]);
+			next.toggle();
+		}
+		// Set current active point
+	})
+})
+
+</script>
+{% endblock %}
