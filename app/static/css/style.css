@@ -43,12 +43,12 @@ p.copyright {
 }
 
 .btn-default {
-    color: darkgrey;
+    color: #313131;
 }
 
 .btn-default:hover {
     color:#fff;
-    background-color: darkgrey;
+    background-color: #313131;
 }
 
 .center {
@@ -57,22 +57,7 @@ p.copyright {
     padding: 10px;
 }
 
-.pulsate {
-    -webkit-animation: pulsate 3s ease-out;
-    -webkit-animation-iteration-count: infinite; 
-    opacity: 0.5;
-}
-@-webkit-keyframes pulsate {
-    0% { 
-        opacity: 0.5;
-    }
-    50% { 
-        opacity: 1.0;
-    }
-    100% { 
-        opacity: 0.5;
-    }
-}
+
 
 .content-section {
     padding: 50px 0;
@@ -105,11 +90,13 @@ p.copyright {
     padding-bottom: 20%;
 }
 
-.intro-message > h1 {
+.intro-message > h1, h1 {
     margin: 0;
     text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
     font-size: 5em;
 }
+
+
 
 .intro-message > h3 {
     text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
@@ -133,13 +120,55 @@ p.copyright {
 
 /*Agenda styles*/
 .agendas{
-    text-align: center;
+    position: relative;
+    /*margin:auto;*/
 }
 
-.agenda{
-    clear:both;
+.delete{
+    float:right;
+    position: relative;
+    top: -25px;
+    left: 20px;
 }
 
+.agenda, .point{
+    text-align: left;
+    cursor: move;
+    width: 35%;
+    padding: 25px;
+    background-color: #313131;
+    border: 1px solid black;
+    margin: auto;
+}
+
+.button-group{
+    margin-top: 10px;
+}
+
+.active{
+    border-color: #fff;
+}
+
+.pulsate {
+    -webkit-animation: pulsate 3s ease-out;
+    -webkit-animation-iteration-count: infinite; 
+    border-color: black;
+    /*opacity: 0.5;*/
+}
+@-webkit-keyframes pulsate {
+    0% { 
+        border-color: black;
+        /*opacity: 0.5;*/
+    }
+    50% { 
+        border-color: #fff;
+        /*opacity: 1.0;*/
+    }
+    100% { 
+        border-color: black;
+        /*opacity: 0.5;*/
+    }
+}
 
 
 
