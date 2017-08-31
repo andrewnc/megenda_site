@@ -25,7 +25,7 @@
                     	<h3>No points</h3>
                     {% else %}
 
-	                    <div class="points sortable-items">
+	                    <div class="points"><!-- add class sortable-items for reordering -->
 	                    {% for point in points %}
                         <div class="point {%if point.current_active == True%}active pulsate{% endif %}">
                             <a href="/delete/point/{{point.id}}" class="delete">x</a>

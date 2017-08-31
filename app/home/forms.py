@@ -10,6 +10,6 @@ class AddAgendaForm(FlaskForm):
 
 class AddPointForm(FlaskForm):
 	name = StringField('Name', validators=[Length(max=128)])
-	content = StringField('Body', validators=[Length(max=512)])
+	content = StringField('Content', validators=[Length(max=512)])
 	add = SubmitField('Add')
 	

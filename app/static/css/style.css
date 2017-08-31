@@ -1,37 +1,20 @@
-body, html {
-    width: 100%;
-    height: 100%;
-    background-color: #4F001F;
-    color:#fff;
+
+/*Styles are alphabetical*/
+.active{
+    border-color: #fff;
 }
 
-body, h1, h2, h3 {
-    font-family: "Lato", "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-weight: 700;
+.add-point-button{
+    cursor: pointer;
 }
 
-a, .navbar-default .navbar-brand, .navbar-default .navbar-nav>li>a {
-  color: #fff;
+.agendas{
+    position: relative;
+    /*margin:auto;*/
 }
 
-a:hover, .navbar-default .navbar-brand:hover, .navbar-default .navbar-nav>li>a:hover {
-  color: darkgrey;
-  cursor: pointer;
-  text-decoration: none;
-}
-
-.navbar-default{
-    background-color: transparent;
-    border-color: transparent;
-}
-
-footer {
-    padding: 50px 0;
-    background-color: #f8f8f8;
-}
-
-p.copyright {
-    margin: 15px 0 0;
+.agenda-name{
+    cursor: pointer;
 }
 
 .alert-info {
@@ -40,6 +23,19 @@ p.copyright {
     color: #687430;
     background-color: #e6ecca;
     border-color: #aec251;
+}
+
+
+body, html {
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    overflow-x:hidden;
+}
+
+body, h1, h2, h3 {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    
 }
 
 .btn-default {
@@ -57,11 +53,14 @@ p.copyright {
     padding: 10px;
 }
 
-
-
 .content-section {
     padding: 50px 0;
     /*border-top: 1px solid #e7e7e7;*/
+}
+
+footer {
+    padding: 50px 0;
+    background-color: #f8f8f8;
 }
 
 .footer, .push {
@@ -79,7 +78,7 @@ p.copyright {
     padding-top: 50px;
     padding-bottom: 50px;
     text-align: center;
-    color: #f8f8f8;
+    background-color: #fff;
     background-size: cover;
     height: 100%;
 }
@@ -88,6 +87,11 @@ p.copyright {
     position: relative;
     padding-top: 20%;
     padding-bottom: 20%;
+    height: 100vh;
+    width: 100%;
+    color: #f8f8f8;
+    font-weight: 700;
+    background-color: #4F001F;
 }
 
 .intro-message > h1, h1 {
@@ -95,8 +99,6 @@ p.copyright {
     text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
     font-size: 5em;
 }
-
-
 
 .intro-message > h3 {
     text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
@@ -107,46 +109,31 @@ p.copyright {
     font-weight: 400;
 }
 
-.topnav {
-    font-size: 14px;
+.navbar-default .navbar-brand, .navbar-default .navbar-nav>li>a {
+  color: #fff;
+  font-weight: 700;
 }
 
-.wrapper {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  margin: 0 auto -4em;
+.navbar-default .navbar-brand:hover, .navbar-default .navbar-nav>li>a:hover {
+  color: darkgrey;
+  cursor: pointer;
+  font-weight: 700;
+  text-decoration: none;
 }
 
-/*Agenda styles*/
-.agendas{
-    position: relative;
-    /*margin:auto;*/
+.navbar-default{
+    background-color: #4F001F;
+    border-color: transparent;
 }
 
-.delete{
-    float:right;
-    position: relative;
-    top: -25px;
-    left: 20px;
+p.copyright {
+    margin: 15px 0 0;
 }
 
-.agenda, .point{
-    text-align: left;
-    cursor: move;
-    width: 35%;
-    padding: 25px;
-    background-color: #313131;
+.point-content{
     border: 1px solid black;
-    margin: auto;
-}
-
-.button-group{
-    margin-top: 10px;
-}
-
-.active{
-    border-color: #fff;
+    padding: 5px;
+    margin-bottom: 5px;
 }
 
 .pulsate {
@@ -170,5 +157,29 @@ p.copyright {
     }
 }
 
+.side-bar-list{
+    text-align: left;
+}
 
+
+.side-bar{
+    border-left: 1px solid black;
+    height: 100vh;
+}
+
+
+td {
+    text-align: left;
+}
+
+.topnav {
+    font-size: 14px;
+}
+
+.wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -4em;
+}
 

@@ -5,6 +5,7 @@ from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_bootstrap import Bootstrap
 
+from flask_socketio import SocketIO
 
 
 #local imports
@@ -15,6 +16,7 @@ from config import app_config
 #database
 db = SQLAlchemy()
 login_manager = LoginManager()
+socketio = SocketIO()
 
 
 def create_app(config_name):
@@ -43,6 +45,8 @@ def create_app(config_name):
 
 	from .present import present as present_blueprint
 	app.register_blueprint(present_blueprint)
+
+	socketio.init_app(app)
 
 
 

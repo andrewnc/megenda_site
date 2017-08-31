@@ -55,7 +55,7 @@ class Agenda(db.Model):
 
 	def __repr__(self):
 		# return "<Agenda: {}, Created By: {}, on {}>".format(self.name, str(User.query.filter_by(id=self.created_by).first().username), self.date_created)
-		return "{}".format(self.date_created.strftime("%A %d, %B %Y"))
+		return "{}".format(self.date_created.strftime("%d %A %b %Y"))
 
 class Point(db.Model):
 

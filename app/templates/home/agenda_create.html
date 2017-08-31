@@ -10,7 +10,31 @@
   <div class="center">
     <h1>Create an Agenda</h1>
     <br/>
-    {{ wtf.quick_form(form) }}
+    <form action="/add/dynamic/agenda/" method="POST">
+    	{{form.csrf}}
+    	<p><label for="name">Name</label><input type="text" name="name" class="form-control" /></p>
+    <!-- {{ wtf.quick_form(form) }} -->
+    <div class="pull-right">
+    	<h4 class="col-sm-8">Add Point</h4>
+    	<i class="fa fa-plus-circle add-point-button col-sm-4" style="font-size: 3em;" aria-hidden="true"></i>
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+	</form>
   </div>
+
 </div>
+{% endblock %}
+
+{% block extrascripts %}
+<script type="text/javascript">
+$(document).ready(function(){
+	var count = 0;
+	$(".add-point-button").unbind('click').bind('click', function(){
+		var point_name = "<div class='point-content'><p><label for='point_{0}'>Point</label><input type='text' name='point_{0}' class='form-control' /></p>".format(count);
+		var point_content = "<p><label for='content_point_{0}'>Content</label><textarea name='content_point_{0}' class='form-control' rows='3' /></p></div>".format(count);
+		$(point_name + point_content).insertBefore(".pull-right");
+		count += 1;
+	});
+})
+</script>
 {% endblock %}

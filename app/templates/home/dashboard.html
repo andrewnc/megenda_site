@@ -19,29 +19,51 @@
 				{% endwith %}
 
 				<!-- Agenda List -->
-                <div class="col-md-12">
-                    <h1>My Agendas</h1>
+                <div class="col-sm-6">
+                    <h3>My Agendas</h3>
                     <hr class="intro-divider">
                     {% if agendas|length == 0 %}
                     	<h3>You don't have any agendas</h3>
                     {% else %}
-
-	                    <div class="agendas sortable-items">
-		                    {% for agenda in agendas %}
-		                    <div class="agenda" >
-		                    	<a href="/delete/agenda/{{agenda.uuid}}" class="delete">x<a>
-		                    	Name: <a href="/agenda/{{agenda.uuid}}">{{agenda.name}}</a><br />
-		                    	Date: <span>{{agenda}}</span>
-		                    </div>
-		                    {% endfor %}
-	                	</div>
-
+                    <table class="table">
+                    	<thead>
+                    		<th></th>
+                    		<th>Name</th>
+                    		<th>Date</th>
+                    		<th>Active Item</th>
+                    	</thead>
+                    	<tbody>
+                    		{% for agenda in agendas %}
+                    			<tr>
+                    				<td><a href="/delete/agenda/{{agenda.uuid}}" class="delete">x</a></td>
+                    				<td><span class="agenda-name" uuid="{{agenda.uuid}}">{{agenda.name}}</span></td>
+                    				<td>{{agenda}}</td>
+                    				<td><a href="{{url_for('present.present_agenda', agenda_uuid=agenda.uuid)}}">{{cur[loop.index0]}}</a></td>
+                    			</tr>
+                    		{% endfor %}
+                    	</tbody>
+                    </table>
 	                {% endif %}                    
-                    </div>
+                
+	                <div class="button-group">
+	                	<a href="{{url_for('home.add_agenda')}}" class="btn btn-default">Add Agenda</a>
+	                </div>	
                 </div>
-                <div class="col-lg-12 button-group">
-                	<a href="{{url_for('home.add_agenda')}}" class="btn btn-default">Add Agenda</a>
-                </div>	
+
+                <div class="col-sm-5 side-bar pull-right" style="display:none;">
+                    <h3 class="side-bar-name"></h3>
+                    <hr class="intro-divider">
+                    <ul class="side-bar-list">
+                    </ul>
+
+                    <span class="side-bar-button"></span>
+                    
+
+                </div>
+
+
+
+
             </div>
         </div>
     </div>
@@ -49,12 +71,7 @@
 {% endblock %}
 
 {% block extrascripts %}
-<script type="text/javascript">
-$(document).ready(function(){
-	$(".delete").click(function(){
-		return confirm("Are you sure you want to delete this agenda?");
-	});
-})
+<script src="{{url_for('static', filename='js/dashboard.js')}}">
 </script>
 
 {% endblock %}

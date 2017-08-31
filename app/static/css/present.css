@@ -3,7 +3,7 @@
   position: relative;
   flex-wrap: wrap;
   overflow: hidden;
-  padding-top: 10%;
+  /*padding-top: 10%;*/
   padding-bottom: 15px;
   display: flex;
   justify-content: space-around;
