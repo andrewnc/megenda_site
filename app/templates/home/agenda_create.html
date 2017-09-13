@@ -2,6 +2,9 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% extends "base.html" %}
 {% block title %}Make Agenda{% endblock %}
+{% block extrastyles %}
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+{% endblock %}
 {% block body %}
 <div class="content-section">
 	<br />
@@ -13,13 +16,17 @@
     <form action="/add/dynamic/agenda/" method="POST">
     	{{form.csrf}}
     	<p><label for="name">Name</label><input type="text" name="name" class="form-control" /></p>
-    <!-- {{ wtf.quick_form(form) }} -->
-    <div class="pull-right">
-    	<h4 class="col-sm-8">Add Point</h4>
-    	<i class="fa fa-plus-circle add-point-button col-sm-4" style="font-size: 3em;" aria-hidden="true"></i>
-    </div>
-    <button type="submit" class="btn btn-default">Submit</button>
+        
+
+        <div class="pull-right">
+        	<h4 class="col-sm-8">Add Point</h4>
+        	<i class="fa fa-plus-circle add-point-button col-sm-4" style="font-size: 3em;" aria-hidden="true"></i>
+        </div>
+
+        <button type="submit" class="btn btn-default">Submit</button>
+
 	</form>
+
   </div>
 
 </div>
@@ -27,13 +34,55 @@
 
 {% block extrascripts %}
 <script type="text/javascript">
+// This code handles the dynamic form, it's not pretty, and will need to be updated for UX purposes, but it works great right now.
 $(document).ready(function(){
 	var count = 0;
+
+    // var spinner = $( ".hours" ).spinner();
+    
+
 	$(".add-point-button").unbind('click').bind('click', function(){
+        var time_picker = "<p class='col-sm-4'><label for='hours_{0}'>Hours</label><input type='number' value='0' name='hours_{0}' class='hours form-control' min='0' max='24' /></p>\n<p class='col-sm-4'><label for='minutes_{0}'>Minutes</label><input type='number'  value='0'  name='minutes_{0}' class='minutes form-control' min='0' max='59' /></p>\n<p class='col-sm-4'><label for='seconds_{0}'>Seconds</label><input type='number' value='1' name='seconds_{0}' class='seconds form-control' min='0' max='59' /></p>".format(count);
 		var point_name = "<div class='point-content'><p><label for='point_{0}'>Point</label><input type='text' name='point_{0}' class='form-control' /></p>".format(count);
 		var point_content = "<p><label for='content_point_{0}'>Content</label><textarea name='content_point_{0}' class='form-control' rows='3' /></p></div>".format(count);
-		$(point_name + point_content).insertBefore(".pull-right");
+		$(time_picker + point_name + point_content).insertBefore(".pull-right");
 		count += 1;
+
+
+        
+
+
+        $(".hours").unbind('change').bind('change', function(){
+            if($(this).val() < 0 || $(this).val() > 24){
+                $(this).parent().wrap("<div class='has-error'></div>");
+            }else{
+                if($(this).parent().parent().hasClass('has-error')){
+                    $(this).parent().unwrap("<div class='has-error'></div>");
+                }  
+            }
+        })
+
+        $(".minutes").unbind('change').bind('change', function(){
+            if($(this).val() < 0 || $(this).val() > 59){
+                $(this).parent().wrap("<div class='has-error'></div>");                
+            }else{
+                if($(this).parent().parent().hasClass('has-error')){
+                    $(this).parent().unwrap("<div class='has-error'></div>");                    
+                }
+            }
+        })
+
+        $(".seconds").unbind('change').bind('change', function(){
+            if($(this).val() < 0 || $(this).val() > 59){
+                $(this).parent().wrap("<div class='has-error'></div>");
+            }else{
+                if($(this).parent().parent().hasClass('has-error')){
+                    $(this).parent().unwrap("<div class='has-error'></div>");                    
+                }
+            }
+        })
+
+
 	});
 })
 </script>

@@ -13,6 +13,7 @@ from . import present
 def present_agenda(agenda_uuid):
 	agenda = Agenda.query.filter_by(uuid=agenda_uuid).first()
 	try:
+		# find the current point for display
 		current_point = agenda.points[0]
 		for point in agenda.points:
 			if point.current_active == True:
@@ -33,11 +34,13 @@ def present_agenda(agenda_uuid):
 # def test_disconnect():
 #     print('Client disconnected')
 
-@socketio.on('my_event', namespace='/view')
-def new_active():
+# called when a card has been advanced
+@socketio.on('my_event')
+def new_active(agenda_uuid):
 	# print "new_active"
-	socketio.emit('new_active')
+	socketio.emit('new_active', {'data':str(agenda_uuid)})
 
+# This is the method that handles the click from presentation mode
 @present.route('/view/active/<int:point_id>', methods=['GET', 'POST'])
 @login_required
 def update_active_point(point_id):
@@ -53,5 +56,5 @@ def update_active_point(point_id):
 	for i in agenda.points:
 		if i.current_active == True:
 			current_point = i
-	new_active()
+	new_active(agenda.uuid)
 	return str(current_point.name)

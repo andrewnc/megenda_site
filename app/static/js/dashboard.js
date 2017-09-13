@@ -15,6 +15,7 @@ $(document).ready(function(){
         }
     };
 
+    // Fancy format functoin
     if (!String.prototype.format) {
       String.prototype.format = function() {
         var args = arguments;
@@ -28,6 +29,7 @@ $(document).ready(function(){
     }
     var param = getUrlParameter('clicked');
 
+    // populates the side box with info from the currently viewed agenda
     function get_side_box(uuid){
         // var uuid = $(this).attr('uuid');
         $.ajax({
@@ -37,12 +39,15 @@ $(document).ready(function(){
                 $(".side-bar").show();
                 var array_of_points = [];
 
+
+
                 for (i in results['points']){
-                    var st = "<ol>Name: {0}</ol>\n<ol>Content: {1}</ol>\n<ol>Current Active: {2}</ol>".format(results['points'][i]['name'], results['points'][i]['content'], results['points'][i]['current_active']);
+                    var st = "<ol>Name: {0}</ol>\n<ol>Content: {1}</ol>\n<ol>Current Active: {2}</ol>\n<ol>Duration: {3}</ol>".format(results['points'][i]['name'], results['points'][i]['content'], results['points'][i]['current_active'], results['points'][i]['duration']);
                     array_of_points.push(st);
                 }
 
                 var response = "<ol>Creator: {0}</ol>\n<ol>Date Created: {1}</ol><h3>Points</h3>\n<ul>\n{2}</ul>".format(results['created_by'], results['date_created'], array_of_points);
+                
 
                 $(".side-bar-name").html(results['name']);
                 $(".side-bar-list").html(response);
@@ -61,6 +66,7 @@ $(document).ready(function(){
 		return confirm("Are you sure you want to delete this agenda?");
 	});
 
+    // handles clicks on agenda names
     $(".agenda-name").click(function(){
         var uuid = $(this).attr('uuid');
         console.log(uuid);

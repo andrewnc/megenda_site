@@ -65,7 +65,13 @@ class Point(db.Model):
 	agenda = db.Column(db.Integer, db.ForeignKey("agendas.id"))
 	name = db.Column(db.String(128))
 	content = db.Column(db.String(512))
+	hours = db.Column(db.Integer)
+	minutes = db.Column(db.Integer)
+	seconds = db.Column(db.Integer)
 	current_active = db.Column(db.Boolean, default=False)
 
 	def __repr__(self):
 		return "{}".format(self.name)
+
+	def time(self):
+		return "{}:{}:{}".format(self.hours, self.minutes, self.seconds)

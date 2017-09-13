@@ -11,6 +11,7 @@ from ..models import User, Agenda, Point
 from . import home
 
 
+# There might be a better way to set this up in the models so you can just say agenda.current_active and not worry about it
 def get_current_point(agenda):
 	# agenda = Agenda.query.filter_by(uuid=agenda_uuid).first()
 	current_point = agenda.points[0]
@@ -23,6 +24,7 @@ def get_current_point(agenda):
 def homepage():
 	return render_template('home/index.html', title="Welcome")
 
+# There are two routes here because when you redirect from a 'back' press breadcrumb you want the viewed app to still be open
 @home.route('/dashboard', defaults={'agenda_uuid': None})
 @home.route('/dashboard/<string:agenda_uuid>')
 @login_required
@@ -31,6 +33,7 @@ def dashboard(agenda_uuid):
 	agendas = current_user.agendas
 	
 	for agenda in agendas:
+		# this handles agendas with no points
 		try:
 			cur.append(get_current_point(agenda))
 		except Exception, e:
@@ -38,6 +41,7 @@ def dashboard(agenda_uuid):
 			print str(e)
 	return render_template('home/dashboard.html', agendas=agendas, cur=cur, clicked=agenda_uuid, title="Dashboard")
 
+# This was the old way to add agendas, I don't think it'll get used anymore
 @home.route('/add/agenda/', methods=['GET', 'POST'])
 @login_required
 def add_agenda():
@@ -71,16 +75,45 @@ def add_dynamic_agenda():
 			#pull names based on key data, grab the associated content and create an object
 			if key.startswith('point'):
 				index = key.split("_")[1]
+
 				content_key = "content_point_{}".format(index)
+				hours_key = "hours_{}".format(index)
+				minutes_key = "minutes_{}".format(index)
+				seconds_key = "seconds_{}".format(index)
+
 				content_value = str(info[content_key][0])
+				hours_value = int(info[hours_key][0])
+				minutes_value = int(info[minutes_key][0])
+				seconds_value = int(info[seconds_key][0])
+
+				if(hours_value == 0 and minutes_value == 0 and seconds_value == 0):
+					seconds_value = 1
+
+				if hours_value > 24:
+					hours_value = 24
+				elif hours_value < 0:
+					hours_value = 0
+
+
+				if minutes_value > 59:
+					minutes_value = 59
+				elif minutes_value < 0:
+					minutes_value = 0
+
+				if seconds_value > 59:
+					seconds_value = 59
+				elif seconds_value < 0:
+					seconds_value = 0
+
 				point_name = str(value[0])
 				if index == '0':
 					active = True
 				else:
 					active = False
 
+				# Doesn't add points with no name - definitely should make that required in the form itself.
 				if point_name != "":
-					point = Point(agenda =agenda.id, name=point_name, content=content_value, current_active=active)
+					point = Point(agenda=agenda.id, name=point_name, content=content_value, hours=int(hours_value), minutes=int(minutes_value), seconds=int(seconds_value), current_active=active)
 					db.session.add(point)
 					db.session.commit()
 		
@@ -111,11 +144,14 @@ def view_agenda(agenda_uuid):
 		abort(404)
 	points = agenda.points
 	li = []
+	# Gather all the data from the form and points, clean it server side and spit it out as JSON - this will be used for the apps and for
+	# the single page dashboard. It is fast, lightweight, and O(n) for a page load which should never be a problem.
 	for i,point in enumerate(points):
 		point_dict = defaultdict(str)
 		point_dict['name'] = str(point.name)
 		point_dict['content'] = str(point.content)
 		point_dict['current_active'] = str(point.current_active)
+		point_dict['duration'] = "{}:{}:{}".format(point.hours, point.minutes, point.seconds)
 		li.append(dict(point_dict))
 	agenda = agenda.__dict__
 	agenda.pop('_sa_instance_state', None)
@@ -130,6 +166,7 @@ def view_agenda(agenda_uuid):
 	return Response(json.dumps(agenda),  mimetype='application/json')
 
 
+# This will be depreciated and replaced with a monster "edit agenda" method or something - just to make it easier for people to use
 @home.route('/add/point/<string:agenda_uuid>/', methods=['GET','POST'])
 @login_required
 def add_point(agenda_uuid):
@@ -148,7 +185,7 @@ def add_point(agenda_uuid):
 	return render_template('home/point_add.html', form=form, agenda_uuid=agenda_uuid, title="Add Point")
 
 
-
+# currently no UX functionality for this
 @home.route('/delete/point/<int:point_id>/', methods=['GET', 'POST'])
 @login_required
 def delete_point(point_id):

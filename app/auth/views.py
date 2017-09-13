@@ -11,6 +11,9 @@ from ..models import User
 from urlparse import urlparse, urljoin
 from flask import request, url_for
 
+
+# TODO: Add a forgot my password email functionality - which will be hard... mostly because I don't want to do it....
+
 def is_safe_url(target):
     ref_url = urlparse(request.host_url)
     test_url = urlparse(urljoin(request.host_url, target))
