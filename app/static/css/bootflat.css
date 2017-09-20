@@ -1710,15 +1710,18 @@ blockquote {
   background-color: transparent;
 }
 .navbar-default .navbar-toggle {
-  background-color: #26816a;
-  border-color: #26816a;
+  /*background-color: #26816a;
+  border-color: #26816a;*/
+  background-color: black;
+  border-color: black;
 }
 .navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
   background-color: #2b957a;
   border-color: #2b957a;
 }
 .navbar-default .navbar-toggle .icon-bar {
-  background-color: #37bc9b;
+  /*background-color: #37bc9b;*/
+  background-color: white;
 }
 .navbar-default .navbar-collapse, .navbar-default .navbar-form {
   border-color: #48cfad;
