@@ -30,7 +30,8 @@
                     		<th></th>
                     		<th>Name</th>
                     		<th>Date</th>
-                    		<th>Active Item</th>
+                            <th>Meeting Length</th>
+                    		<th>Share</th>
                     	</thead>
                     	<tbody>
                     		{% for agenda in agendas %}
@@ -38,7 +39,9 @@
                     				<td><a href="/delete/agenda/{{agenda.uuid}}" class="delete">x</a></td>
                     				<td><span class="agenda-name" uuid="{{agenda.uuid}}">{{agenda.name}}</span></td>
                     				<td>{{agenda}}</td>
-                    				<td><a href="{{url_for('present.present_agenda', agenda_uuid=agenda.uuid)}}">{{cur[loop.index0]}}</a></td>
+                                    <!-- <td><a href="{{url_for('present.present_agenda', agenda_uuid=agenda.uuid)}}">{{cur[loop.index0]}}</a></td> -->
+                                    <td><a href="{{url_for('present.present_agenda', agenda_uuid=agenda.uuid)}}">{{times[loop.index0]}}</a></td>
+                                    <td><a href="#" data-toggle="popover" title="URL" data-content="/view/{{agenda.uuid}}"><i class="fa fa-share share" uuid="{{agenda.uuid}}"></i></a></td>
                     			</tr>
                     		{% endfor %}
                     	</tbody>
@@ -46,7 +49,7 @@
 	                {% endif %}                    
                 
 	                <div class="button-group">
-	                	<a href="{{url_for('home.add_agenda')}}" class="btn btn-default">Add Agenda</a>
+	                	<a href="{{url_for('home.add_agenda')}}" class="btn btn-normal btn-block">Add Agenda</a>
 	                </div>	
                 </div>
 

@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 import uuid
 import json
 from collections import defaultdict
+import datetime
 
 
 from forms import AddAgendaForm, AddPointForm
@@ -20,6 +21,21 @@ def get_current_point(agenda):
 			current_point = point
 	return current_point
 
+def get_agenda_duration(agenda):
+	times = []
+	s = "00:00:00"
+	total_time = datetime.datetime.strptime(s, "%H:%M:%S")
+	for point in agenda.points:
+		try:
+			point_time = datetime.timedelta(hours=int(point.hours), minutes=int(point.minutes), seconds=int(point.seconds))
+			times.append(point_time)
+		except Exception, e:
+			pass #fail silently
+	for time in times:
+		total_time += time
+	return total_time.strftime("%H:%M:%S")
+
+
 @home.route('/')
 def homepage():
 	return render_template('home/index.html', title="Welcome")
@@ -30,16 +46,23 @@ def homepage():
 @login_required
 def dashboard(agenda_uuid):
 	cur = []
+	total_times = []
 	agendas = current_user.agendas
 	
 	for agenda in agendas:
+
 		# this handles agendas with no points
 		try:
 			cur.append(get_current_point(agenda))
 		except Exception, e:
 			cur.append("N/A")
 			print str(e)
-	return render_template('home/dashboard.html', agendas=agendas, cur=cur, clicked=agenda_uuid, title="Dashboard")
+
+		
+		total_times.append(get_agenda_duration(agenda))
+
+
+	return render_template('home/dashboard.html', agendas=agendas, cur=cur,times=total_times, clicked=agenda_uuid, title="Dashboard")
 
 # This was the old way to add agendas, I don't think it'll get used anymore
 @home.route('/add/agenda/', methods=['GET', 'POST'])
@@ -153,11 +176,13 @@ def view_agenda(agenda_uuid):
 		point_dict['current_active'] = str(point.current_active)
 		point_dict['duration'] = "{}:{}:{}".format(point.hours, point.minutes, point.seconds)
 		li.append(dict(point_dict))
+	duration = get_agenda_duration(agenda)
 	agenda = agenda.__dict__
 	agenda.pop('_sa_instance_state', None)
 
 	agenda['points'] = li
 	agenda['created_by'] = created_by
+	agenda['duration'] = duration
 	for key, value in agenda.iteritems():
 		if key == 'date_created':
 			agenda[key] = str(value)

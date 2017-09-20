@@ -29,8 +29,10 @@
 
 </div>
 
-<div class="back">
-	<a href="{{url_for('home.dashboard', clicked=agenda.uuid)}}">exit presentation</a>
+<ul class="pager">
+	<li class="previous">
+		<a  href="{{url_for('home.dashboard', clicked=agenda.uuid)}}" >exit presentation</a>
+	</li>
 </div>
 {% endblock %}
 

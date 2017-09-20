@@ -46,12 +46,13 @@ $(document).ready(function(){
                     array_of_points.push(st);
                 }
 
-                var response = "<ol>Creator: {0}</ol>\n<ol>Date Created: {1}</ol><h3>Points</h3>\n<ul>\n{2}</ul>".format(results['created_by'], results['date_created'], array_of_points);
+                var response = "<ol>Creator: {0}</ol>\n<ol>Date Created: {1}</ol>\n<ol>Duration: {2}</ol><h3>Points</h3>\n<ul>\n{3}</ul>".format(results['created_by'], results['date_created'], results['duration'], array_of_points);
                 
 
                 $(".side-bar-name").html(results['name']);
                 $(".side-bar-list").html(response);
-                $(".side-bar-button").html("<a href='/add/point/{0}' class='btn btn-default'>Add point</a>".format(uuid))
+                // Include to get a button
+                // $(".side-bar-button").html("<a href='/add/point/{0}' class='btn btn-normal btn-block'>Add point</a>".format(uuid))
             }
         });
     }
@@ -60,7 +61,7 @@ $(document).ready(function(){
         get_side_box(param);   
     }
 
-
+    $('[data-toggle="popover"]').popover();
 
 	$(".delete").click(function(){
 		return confirm("Are you sure you want to delete this agenda?");
@@ -69,7 +70,7 @@ $(document).ready(function(){
     // handles clicks on agenda names
     $(".agenda-name").click(function(){
         var uuid = $(this).attr('uuid');
-        console.log(uuid);
+        // console.log(uuid);
         get_side_box(uuid);
         
     });
