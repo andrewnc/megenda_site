@@ -104,3 +104,12 @@
 .card-container > .card:not(:first-child){
   display: none;
 }
+
+.current-active{
+    background-color: rgba(201,55,86,0.2);
+    border-bottom-right-radius: 50px;
+    border-top-right-radius: 50px;
+}
+.present-name{
+  text-align: center;
+}

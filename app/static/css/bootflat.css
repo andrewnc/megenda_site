@@ -22,9 +22,9 @@
 body {
   font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: #434a54;
-  /*background-color: white;*/
+  background-color: white;
   /*background-color: #A0D468;*/
-  background-color: #E6E9ED;
+  /*background-color: #E6E9ED;*/
 }
 
 a {
@@ -562,7 +562,7 @@ blockquote {
  * pager
  * --------------------------------------------------
  */
-.pager li > a, .pager li > span {
+/*.pager li > a, .pager li > span {
   color: white;
   background-color: #8cc152;
   border-color: #8cc152;
@@ -570,6 +570,16 @@ blockquote {
 .pager li > a:hover, .pager li > a:focus {
   background-color: #a0d468;
   border-color: #a0d468;
+}*/
+
+.pager li > a, .pager li > span {
+  color: #FFB3A7;
+  background-color: #C93756;
+  border-color: #C93756;
+}
+.pager li > a:hover, .pager li > a:focus {
+  background-color: #F47983;
+  border-color: #F47983;
 }
 .pager .disabled > a, .pager .disabled > a:hover, .pager .disabled > a:focus, .pager .disabled > span {
   color: #e6e9ed;

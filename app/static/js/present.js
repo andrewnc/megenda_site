@@ -37,20 +37,31 @@ $(document).ready(function(){
 		  url: "/view/active/" + point_id,
 		})
 		  .done(function( msg ) {
-		    // console.log( "Data Saved: " + msg );
-		    // $(".current_point").text(msg);
-		    // after message is received 
 		    from_active = true;
 		  });
 	}
+
+	// These two following functions need to be refactored - they have a TON of duplicated code and the logic flow isn't optimal. 
+	// It'll take a bit of work, but I think it will be no problem. 
 
 	function advance_listner_card(card_to_advance){
 		var next = card_to_advance.next();
 		if(next.length == 0){
 			$(".card-container").children().first().toggle();
+
+			var index = $(".card-container").children().first().children().eq(1).attr('class').split(" ")[1];
+
+			$(".overview").removeClass('current-active');
+			$("#overview_{0}".format(index)).addClass('current-active');
+
 			card_to_advance.toggle();
 		}else{
 			card_to_advance.toggle();
+			var index = $(next).children().eq(1).attr('class').split(" ")[1]
+
+			$(".overview").removeClass('current-active');
+			$("#overview_{0}".format(index)).addClass('current-active');
+
 			next.toggle();
 		}
 	}	
@@ -59,16 +70,29 @@ $(document).ready(function(){
 		var next = card_to_advance.next();
 		if(next.length == 0){
 			$(".card-container").children().first().toggle();
-			push_active($(".card-container").children().first().children().eq(1).attr('class').split(" ")[1]);
+
+			var index = $(".card-container").children().first().children().eq(1).attr('class').split(" ")[1];
+			push_active(index);
+
+			$(".overview").removeClass('current-active');
+			$("#overview_{0}".format(index)).addClass('current-active');
+
 			card_to_advance.toggle();
 		}else{
 			card_to_advance.toggle();
-			push_active($(next).children().eq(1).attr('class').split(" ")[1]);
+
+			var index = $(next).children().eq(1).attr('class').split(" ")[1]
+			push_active(index);
+
+			$(".overview").removeClass('current-active');
+			$("#overview_{0}".format(index)).addClass('current-active');
+
+
 			next.toggle();
 		}
 	}
 	$(".card").click(function(){
-		advance_card($(this))
+		advance_card($(this));
 
 	})
 })

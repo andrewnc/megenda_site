@@ -4,36 +4,53 @@
 {% endblock %}
 {% block body %}
 
-<div class="container" style='margin-top:10%'>
+<div class="container">
 	<div class="row">
-		<div clas="col-md-12">
+		<div class="col-md-12 present-name">
 			<h1>{{agenda.name}}</h1>
 		</div>
 	</div>
-</div>
 
-<div class="card-container">
 
-{% for point in points %}
-<div class="card" dataid="{{point.id}}">
-	<div class="card-image"></div>
-	<div class="card-info {{point.id}}">
-		<div class="card-title">{{point.name}} <span id='time_{{point.id}}'>{{point.time()}}</span></div>
-		<div class="card-detail">{{point.content}}</div>
+	<div class="col-md-6">
+		<div class="card-container">
+
+			{% for point in points %}
+			<div class="card" dataid="{{point.id}}">
+				<div class="card-image"></div>
+				<div class="card-info {{point.id}}">
+					<div class="card-title">{{point.name}} <span id='time_{{point.id}}'>{{point.time()}}</span></div>
+					<div class="card-detail">{{point.content}}</div>
+				</div>
+			</div>
+			{% endfor %}
+
+		</div>
+		<!-- <div style="clear:both;"></div> -->
+		<ul class="pager">
+			<li class="previous">
+				<a  href="{{url_for('home.dashboard', clicked=agenda.uuid)}}" >exit presentation</a>
+			</li>
+		</ul>
+	</div>
+
+	<div class="col-md-6">
+		<h3> Meeting Agenda </h3>
+		<ul>
+			{% for point in points %}
+				<li>
+	                <div id="overview_{{point.id}}" class='overview {%if point.current_active%}current-active{%endif%}'>
+	                  <h4>{{point.name}} - {{point.time()}}</h4>	             
+	                  <p>{{point.content}}</p>
+	                </div>
+             	 </li>
+			{% endfor %}
+        </ul>
 	</div>
 </div>
- {% endfor %}
-
-  
 
 
-</div>
 
-<ul class="pager">
-	<li class="previous">
-		<a  href="{{url_for('home.dashboard', clicked=agenda.uuid)}}" >exit presentation</a>
-	</li>
-</div>
 {% endblock %}
 
 {% block extrascripts %}
@@ -68,7 +85,7 @@ $(document).ready(function(){
 		    }
 		    document.getElementById('time_{0}'.format(card_id)).innerHTML = hours + ":" + minutes + ":" + remainingSeconds;
 		    if (seconds == 0) {
-		        clearInterval(countdownTimer);
+		        clearInterval(count_down_timer);
 		        document.getElementById('time_{0}'.format(card_id)).innerHTML = "Completed";
 		    } else {
 		        seconds--;
