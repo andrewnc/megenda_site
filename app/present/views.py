@@ -22,7 +22,7 @@ def present_agenda(agenda_uuid):
 		current_point = 0
 		print str(e)
 
-	return render_template('present/present.html',agenda=agenda, points=agenda.points, current_point=current_point, title="Present")
+	return render_template('present/present.html',agenda=agenda, points=agenda.points[::-1], current_point=current_point, title="Present")
 
 
 # @socketio.on('client_connected')
