@@ -57,7 +57,6 @@ funcsigs==1.0.2
 functools32==3.2.3.post2
 future==0.16.0
 futures==3.0.5
-gevent==1.1.2
 greenlet==0.4.10
 grin==1.2.1
 h5py==2.6.0
