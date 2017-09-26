@@ -26,7 +26,7 @@ def present_agenda(agenda_uuid):
 		points.append([i, i.id])
 
 	points = sorted(points, key=lambda x:x[1])
-	points = list(zip(*points)[0])
+	points = list(zip(*points)[0])[::-1]
 
 
 	return render_template('present/present.html',agenda=agenda, points=points, current_point=current_point, title="Present")
