@@ -94,6 +94,7 @@ def add_dynamic_agenda():
 
 		info.pop('name', None)
 		points = []
+		counter = 0
 		for key,value in info.iteritems():
 			#pull names based on key data, grab the associated content and create an object
 			if key.startswith('point'):
@@ -136,9 +137,10 @@ def add_dynamic_agenda():
 
 				# Doesn't add points with no name - definitely should make that required in the form itself.
 				if point_name != "":
-					point = Point(agenda=agenda.id, name=point_name, content=content_value, hours=int(hours_value), minutes=int(minutes_value), seconds=int(seconds_value), current_active=active)
+					point = Point(agenda=agenda.id, name=point_name, internal_order=counter, content=content_value, hours=int(hours_value), minutes=int(minutes_value), seconds=int(seconds_value), current_active=active)
 					db.session.add(point)
 					db.session.commit()
+					counter += 1
 		
 
 	return redirect(url_for('home.dashboard', clicked=agenda.uuid))
@@ -167,8 +169,27 @@ def view_agenda(agenda_uuid):
 		abort(404)
 	points = agenda.points
 	li = []
+
 	# Gather all the data from the form and points, clean it server side and spit it out as JSON - this will be used for the apps and for
 	# the single page dashboard. It is fast, lightweight, and O(n) for a page load which should never be a problem.
+
+	try:
+		points = []
+		for i in agenda.points:
+			if i.internal_order is None:
+				raise ValueError("oops")
+			points.append([i, i.internal_order])
+		points = sorted(points, key=lambda x:x[1])
+		points = list(zip(*points)[0])
+	except Exception as e:
+		print(e)
+		points = []
+		for i in agenda.points:
+			points.append([i, i.id])
+		points = sorted(points, key=lambda x:x[1])
+		points = list(zip(*points)[0])
+
+	
 	for i,point in enumerate(points):
 		point_dict = defaultdict(str)
 		point_dict['name'] = str(point.name)

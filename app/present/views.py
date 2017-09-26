@@ -21,12 +21,24 @@ def present_agenda(agenda_uuid):
 	except Exception, e:
 		current_point = 0
 		print str(e)
-	points = []
-	for i in agenda.points:
-		points.append([i, i.id])
+	
+	
 
-	points = sorted(points, key=lambda x:x[1])
-	points = list(zip(*points)[0])[::-1]
+	try:
+		points = []
+		for i in agenda.points:
+			if i.internal_order is None:
+				raise ValueError("oops")
+			points.append([i, i.internal_order])
+		points = sorted(points, key=lambda x:x[1])
+		points = list(zip(*points)[0])
+	except Exception as e:
+		print(e)
+		points = []
+		for i in agenda.points:
+			points.append([i, i.id])
+		points = sorted(points, key=lambda x:x[1])
+		points = list(zip(*points)[0])
 
 
 	return render_template('present/present.html',agenda=agenda, points=points, current_point=current_point, title="Present")

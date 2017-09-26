@@ -63,6 +63,7 @@ class Point(db.Model):
 
 	id = db.Column(db.Integer, primary_key=True)
 	agenda = db.Column(db.Integer, db.ForeignKey("agendas.id"))
+	internal_order = db.Column(db.Integer)
 	name = db.Column(db.String(128))
 	content = db.Column(db.String(512))
 	hours = db.Column(db.Integer)
