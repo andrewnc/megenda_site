@@ -21,8 +21,15 @@ def present_agenda(agenda_uuid):
 	except Exception, e:
 		current_point = 0
 		print str(e)
+	points = []
+	for i in agenda.points:
+		points.append([i, i.id])
 
-	return render_template('present/present.html',agenda=agenda, points=agenda.points[::-1], current_point=current_point, title="Present")
+	points = sorted(points, key=lambda x:x[1])
+	points = list(zip(*points)[0])
+
+
+	return render_template('present/present.html',agenda=agenda, points=points, current_point=current_point, title="Present")
 
 
 # @socketio.on('client_connected')
