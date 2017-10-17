@@ -62,6 +62,7 @@ body, h1, h2, h3 {
 .fade-in {
     /*background-color: #A0D468;*/
     /*margin: auto auto;*/
+    margin: 0 120px;
 
     -webkit-animation: fadein 4s; /* Safari, Chrome and Opera > 12.1 */
        -moz-animation: fadein 4s; /* Firefox < 16 */
@@ -137,7 +138,7 @@ footer {
     position: relative;
     padding-top: 20%;
     padding-bottom: 20%;
-    height: 100vh;
+    height: 100%;
     width: 100%;
     /*color: #f8f8f8;*/
     color: #FFB3A7;

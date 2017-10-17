@@ -35,6 +35,10 @@ def get_agenda_duration(agenda):
 		total_time += time
 	return total_time.strftime("%H:%M:%S")
 
+@home.route('/signup/', methods=['POST'])
+def signup():
+	print(request.form)
+	return redirect(url_for('home.homepage'))
 
 @home.route('/')
 def homepage():

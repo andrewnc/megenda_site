@@ -83,15 +83,6 @@
             });
           };
         }
-        $(function() {
-          $(".sortable-items").sortable({
-            start: function(e, ui) {
-              var marginsToSet = ui.item.data().sortableItem.margins;
-              ui.helper.css('margin-left', marginsToSet.left);
-              ui.helper.css('margin-top', marginsToSet.top);
-            }
-          });
-      });
     });
     </script>
     {% block extrascripts %}

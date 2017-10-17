@@ -55,8 +55,9 @@ def present_agenda(agenda_uuid):
 
 # called when a card has been advanced
 @socketio.on('my_event')
-def new_active(agenda_uuid, current_id):
-	socketio.emit('new_active', {'data':str(agenda_uuid), 'id': str(current_id)})
+def new_active(agenda_uuid):
+	# print "new_active"
+	socketio.emit('new_active', {'data':str(agenda_uuid)})
 
 # This is the method that handles the click from presentation mode
 @present.route('/view/active/<int:point_id>', methods=['GET', 'POST'])
@@ -74,23 +75,5 @@ def update_active_point(point_id):
 	for i in agenda.points:
 		if i.current_active == True:
 			current_point = i
-	new_active(agenda.uuid, current_point.id)
-	return str(current_point.name)
-
-@present.route('/off_topic/active/<int:point_id>', methods=['POST'])
-@login_required
-def off_topic(point_id):
-	current_point = Point.query.filter_by(id=point_id).first()
-	agenda = Agenda.query.filter_by(id=current_point.agenda).first()
-
-	for point in agenda.points:
-		point.current_active = False
-
-	current_point.current_active = True
-	db.session.commit()
-
-	for i in agenda.points:
-		if i.current_active == True:
-			current_point = i
-	new_active(agenda.uuid, current_point.id)
+	new_active(agenda.uuid)
 	return str(current_point.name)
