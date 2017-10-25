@@ -1,7 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, ValidationError
 from wtforms.validators import DataRequired, EqualTo, Length
-
 from ..models import User, Agenda, Point
 
 class AddAgendaForm(FlaskForm):
@@ -13,3 +12,5 @@ class AddPointForm(FlaskForm):
 	content = StringField('Content', validators=[Length(max=512)])
 	add = SubmitField('Add')
 	
+class MailingListForm(FlaskForm):
+	email = StringField("Email")

@@ -33,7 +33,7 @@ body, html {
     overflow-x:hidden;
 }
 
-body, h1, h2, h3 {
+body, h1, h2, h3, h4 {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     
 }
@@ -141,19 +141,20 @@ footer {
     height: 100%;
     width: 100%;
     /*color: #f8f8f8;*/
-    color: #FFB3A7;
+    /*color: #FFB3A7;*/
+    color: #fff;
     font-weight: 700;
     /*background-color: #A0D468;*/
 }
 
 .intro-message > h1, h1 {
     margin: 0;
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    /*text-shadow: 2px 2px 3px rgba(0,0,0,0.6);*/
     font-size: 5em;
 }
 
 .intro-message > h3 {
-    text-shadow: 2px 2px 3px rgba(0,0,0,0.6);
+    /*text-shadow: 2px 2px 3px rgba(0,0,0,0.6);*/
 }
 
 .lead {

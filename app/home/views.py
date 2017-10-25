@@ -6,7 +6,7 @@ from collections import defaultdict
 import datetime
 
 
-from forms import AddAgendaForm, AddPointForm
+from forms import AddAgendaForm, AddPointForm, MailingListForm
 from .. import db
 from ..models import User, Agenda, Point
 from . import home
@@ -37,7 +37,7 @@ def get_agenda_duration(agenda):
 
 @home.route('/signup/', methods=['POST'])
 def signup():
-	print(request.form)
+	print(request.form.Email)
 	return redirect(url_for('home.homepage'))
 
 @home.route('/')
